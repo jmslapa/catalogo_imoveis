@@ -20,7 +20,7 @@ class CreateTableRealStatePhotos extends Migration
             $table->boolean('is_thumb');            
             $table->timestamps();
 
-            $table->foreign('real_state_id')->references('id')->on('real_state');
+            $table->foreign('real_state_id')->references('id')->on('real_states')->onDelete('cascade');
         });
     }
 

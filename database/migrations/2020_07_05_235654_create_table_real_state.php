@@ -13,7 +13,7 @@ class CreateTableRealState extends Migration
      */
     public function up()
     {
-        Schema::create('real_state', function (Blueprint $table) {
+        Schema::create('real_states', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title');
@@ -27,7 +27,7 @@ class CreateTableRealState extends Migration
             $table->string('slug');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -38,6 +38,6 @@ class CreateTableRealState extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('real_state');
+        Schema::dropIfExists('real_states');
     }
 }
