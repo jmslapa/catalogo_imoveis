@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->namespace('Api')->group(function() {
+
+    Route::prefix('search')->name('search.')->group(function() {
+        Route::get('/', 'RealStateSearchController@index')->name('index');
+        Route::get('/{id}', 'RealStateSearchController@show')->name('show');
+    });
 
     Route::namespace('Auth')->name('api.')->group(function() {
         //login

@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RealState extends Model
 {
+
+    protected $appends = ['_show', '_thumb'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,6 +19,24 @@ class RealState extends Model
         'price', 'slug', 'bathrooms', 'bedrooms',
         'property_area', 'total_property_area'
     ];
+
+    public function getShowAttribute()
+    {
+        return [
+            'href' => route('search.show', $this->id),
+            'rel' => 'Real States'
+        ];
+    }
+
+    public function getThumbAttribute() {
+        $thumb = $this->photos()->where('is_thumb', true);
+        if($thumb->count()) {
+            return [
+                'href' => url("/storage/{$thumb->first()->photo}"),
+                'rel' => "Real State Photos"
+            ];
+        }
+    }
 
     /**
      * Relacionamento com a tabela users
@@ -45,5 +66,10 @@ class RealState extends Model
     public function photos()
     {
         return $this->hasMany(RealStatePhoto::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 }
